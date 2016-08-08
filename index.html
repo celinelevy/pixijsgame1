@@ -1,0 +1,45 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Hello World</title>
+<body>
+<script src="pixi.js/bin/pixi.min.js"></script>
+<script>
+
+
+//Aliases
+var Container = PIXI.Container,
+    autoDetectRenderer = PIXI.autoDetectRenderer,
+    loader = PIXI.loader,
+    resources = PIXI.loader.resources,
+    Sprite = PIXI.Sprite;
+
+//Create a Pixi stage and renderer and add the 
+//renderer.view to the DOM
+var stage = new Container(),
+    renderer = autoDetectRenderer(256, 256);
+document.body.appendChild(renderer.view);
+
+//load an image and run the `setup` function when it's done
+loader
+  .add("images/image1.png")
+  .load(setup);
+
+function setup() {
+
+  //Create the `cat` sprite, add it to the stage, and render it
+  var cat = new Sprite(resources["images/image1.png"].texture);  
+
+		cat.x = 35;
+		cat.y = 40;
+
+		cat.anchor.x = 0.5;
+		cat.anchor.y = 0.5;
+
+		cat.rotation = 0.2;
+
+  stage.addChild(cat);
+  renderer.render(stage);
+}
+
+</script>
+</body>
