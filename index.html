@@ -10,55 +10,32 @@
 var Container = PIXI.Container,
     autoDetectRenderer = PIXI.autoDetectRenderer,
     loader = PIXI.loader,
-    TextureCache = PIXI.utils.TextureCache,
     resources = PIXI.loader.resources,
+    TextureCache = PIXI.utils.TextureCache,
+    Texture = PIXI.Texture,
     Sprite = PIXI.Sprite;
 
-//Create a Pixi stage and renderer and add the 
-//renderer.view to the DOM
 var stage = new Container(),
     renderer = autoDetectRenderer(256, 256);
+
 document.body.appendChild(renderer.view);
 renderer.view.style.border = "1px dashed red";
 
-  loader
-    .add('images/tileimage1.png')
-    .load(setup);
+var pic, id;
+
+loader.add('images/imagepack.json').load(setup);
 
 function setup() {
-  
-var texture = TextureCache['images/tileimage1.png'];
 
-var rectangle = new PIXI.Rectangle(96, 65, 32, 32);
-texture.frame = rectangle;
+id = PIXI.loader.resources["images/imagepack.json"].textures;
+pic = new Sprite(id["bird.png"]);
+stage.addChild(pic);
+console.log('hello')
 
-var rocket =  new Sprite(texture)
-
-rocket.x = 32;
-rocket.y = 32;
-
-stage.addChild(rocket);
 
 renderer.render(stage);
 
 }
-/*
-function setup() {
-
-  //Create the `cat` sprite, add it to the stage, and render it
-  var cat = new Sprite(resources["images/image1.png"].texture);  
-
-		cat.x = 35;
-		cat.y = 40;
-
-		cat.anchor.x = 0.5;
-		cat.anchor.y = 0.5;
-
-		cat.rotation = 0.2;
-
-  stage.addChild(cat);
-  renderer.render(stage);
-}*/
 
 </script>
 </body>
