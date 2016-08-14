@@ -5,8 +5,9 @@
 <script src="pixi.js/bin/pixi.min.js"></script>
 <script>
 
-
-//Aliases
+//******************************************
+// BASIC SETUP
+// ***********
 var Container = PIXI.Container,
     autoDetectRenderer = PIXI.autoDetectRenderer,
     loader = PIXI.loader,
@@ -16,25 +17,54 @@ var Container = PIXI.Container,
     Sprite = PIXI.Sprite;
 
 var stage = new Container(),
-    renderer = autoDetectRenderer(256, 256);
-
+    renderer = autoDetectRenderer(512, 512);
 document.body.appendChild(renderer.view);
 renderer.view.style.border = "1px dashed red";
 
+loader.add('images/imagepack.json').load(setup);
+	
+//******************************************
+// CUSTOM CODE
+// ***********
 var pic, id;
 
-loader.add('images/imagepack.json').load(setup);
-
 function setup() {
+	// **************
+	// TILESET
+	id = PIXI.loader.resources["images/imagepack.json"].textures;
+	// **************
+	// HEARTS
+	var numberOfHearts = 6,
+	spacing = 48,
+	xOffset = 150;
 
-id = PIXI.loader.resources["images/imagepack.json"].textures;
-pic = new Sprite(id["bird.png"]);
-stage.addChild(pic);
-console.log('hello')
+	for (var i = 0; i < numberOfHearts; i++) {
+		var heart = new Sprite(id["love1.png"]);
 
+		var x = spacing * i + xOffset;
+		var y = randomInt(0, renderer.view.height);
 
-renderer.render(stage);
+		heart.x = x;
+		heart.y = y;
 
+		stage.addChild(heart);
+
+	}
+	// **************
+	// BIRD
+	pic = new Sprite(id["bird.png"]);
+	pic.x = 100;
+	pic.y = 400;
+	stage.addChild(pic);
+	
+//console.log('hello')
+
+	renderer.render(stage);
+
+}
+
+function randomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 </script>
